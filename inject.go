@@ -7,9 +7,6 @@ import (
 	"strings"
 )
 
-// TODO:
-// ./app --scrIP <ip> --srcMac <mac> --srcPort <port> --dstIP <IP> --dstMac <mac> --dstPort <port>
-
 type Endpoint struct {
 	IP   net.IP
 	Mac  net.HardwareAddr
