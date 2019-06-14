@@ -10,7 +10,7 @@ import (
 	"github.com/google/gopacket/layers"
 	"github.com/google/gopacket/pcap"
 
-	"github.com/guesslin/inject"
+	"github.com/guesslin/inject/types"
 )
 
 const (
@@ -36,9 +36,9 @@ var (
 )
 
 func generatePacket(payload []byte) []byte {
-	client, err := inject.NewEndpoint(*src, *srcMac)
+	client, err := types.NewEndpoint(*src, *srcMac)
 	exitOnError(err)
-	server, err := inject.NewEndpoint(*dst, *dstMac)
+	server, err := types.NewEndpoint(*dst, *dstMac)
 	exitOnError(err)
 
 	ethernetLayer := &layers.Ethernet{

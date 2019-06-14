@@ -1,4 +1,4 @@
-package inject // github.com/guesslin/inject
+package types // github.com/guesslin/inject/types
 
 import (
 	"fmt"
@@ -37,9 +37,4 @@ func NewEndpoint(host string, rawMac string) (*Endpoint, error) {
 		Mac:  mac,
 		Port: port,
 	}, nil
-}
-
-type Packet struct {
-	Source      Endpoint
-	Destination Endpoint
 }
