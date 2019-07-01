@@ -5,10 +5,13 @@
 
 ## usage
 
-`./app -nic <nic> -src <IP>:<Port> -srcMac <Mac> -dst <IP>:<Port> -dstMac <Mac>`
+```
+$ inject [sub command] [options]
+```
 
 ## TODO
 
+- [X] TCP packet
 - [ ] ARP packet
 - [ ] UDP packet
 - [ ] Load payload from file

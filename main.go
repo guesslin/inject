@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"io/ioutil"
 	"log"
 	"os"
 	"time"
@@ -26,13 +27,13 @@ var (
 	}
 )
 
-// ./app -nic <nic> --src <IP>:<Port> --srcMac <mac> --dst <IP>:<Port> --dstMac <mac>
 var (
-	src    = flag.String("src", "", "")
-	srcMac = flag.String("srcMac", "", "")
-	dst    = flag.String("dst", "", "")
-	dstMac = flag.String("dstMac", "", "")
-	nic    = flag.String("nic", "eth0", "")
+	src      = flag.String("src", "", "")
+	srcMac   = flag.String("srcMac", "", "")
+	dst      = flag.String("dst", "", "")
+	dstMac   = flag.String("dstMac", "", "")
+	nic      = flag.String("nic", "eth0", "")
+	filename = flag.String("filename", "", "")
 )
 
 func generatePacket(payload []byte) []byte {
@@ -76,7 +77,11 @@ func main() {
 	handle, err := pcap.OpenLive(*nic, snapshotLength, promiscuous, timeout)
 	exitOnError(err)
 	defer handle.Close()
-	err = handle.WritePacketData(generatePacket(nil))
+	if *filename == "" {
+		err = handle.WritePacketData(generatePacket(nil))
+	} else {
+		err = handle.WritePacketData(generatePacket(loadPayloadFrom(*filename)))
+	}
 	if err != nil {
 		log.Println(err)
 	}
@@ -87,4 +92,24 @@ func exitOnError(err error) {
 		log.Println(err)
 		os.Exit(0)
 	}
+}
+
+func loadPayloadFrom(fname string) []byte {
+	f, err := os.Open(fname)
+	exitOnError(err)
+	defer f.Close()
+	content, err := ioutil.ReadAll(f)
+	exitOnError(err)
+	return content
+}
+
+func loadPcap(fname string) []gopacket.Packet {
+	hpcap, err := pcap.OpenOffline(fname)
+	exitOnError(err)
+	packets := make([]gopacket.Packet, 0)
+	psource := gopacket.NewPacketSource(hpcap, hpcap.LinkType())
+	for packet := range psource.Packets() {
+		packets = append(packets, packet)
+	}
+	return packets
 }
