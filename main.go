@@ -49,6 +49,7 @@ func generatePacket(payload []byte) []byte {
 	}
 	ipLayer := &layers.IPv4{
 		Version:  4,
+		TTL:      64,
 		SrcIP:    client.IP,
 		DstIP:    server.IP,
 		Protocol: layers.IPProtocolTCP,
