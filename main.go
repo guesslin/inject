@@ -27,15 +27,6 @@ var (
 	}
 )
 
-var (
-	src      = flag.String("src", "", "")
-	srcMac   = flag.String("srcMac", "", "")
-	dst      = flag.String("dst", "", "")
-	dstMac   = flag.String("dstMac", "", "")
-	nic      = flag.String("nic", "eth0", "")
-	filename = flag.String("filename", "", "")
-)
-
 func generatePacket(payload []byte) []byte {
 	client, err := types.NewEndpoint(*src, *srcMac)
 	exitOnError(err)
