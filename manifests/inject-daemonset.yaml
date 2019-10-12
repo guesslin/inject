@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: inject-daemonset
+  labels:
+    app: inject
+spec:
+  selector:
+    matchLabels:
+      app: inject
+  template:
+    metadata:
+      labels:
+        app: inject
+    spec:
+      containers:
+      - name: inject
+        image: guesslin/inject:20191012
+        command: ['sleep', 'inf']
+      restartPolicy: Always
