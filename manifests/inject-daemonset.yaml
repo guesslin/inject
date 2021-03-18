@@ -16,5 +16,6 @@ spec:
       containers:
       - name: inject
         image: guesslin/inject:20191012
+        imagePullPolicy: Always
         command: ['sleep', 'inf']
       restartPolicy: Always
