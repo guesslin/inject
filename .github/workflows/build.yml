@@ -1,0 +1,10 @@
+name: Build Inject project binary
+on:
+    push:
+        branches: [ $default-branch ]
+    pull_request:
+        branches: [ $default-branch ]
+    # schedule:
+    #   - cron: $cron-weekly
+jobs:
+  

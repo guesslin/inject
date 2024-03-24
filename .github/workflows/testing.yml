@@ -1,0 +1,3 @@
+name: Testing Inject source code
+on: [push, pull_request]
+jobs:
